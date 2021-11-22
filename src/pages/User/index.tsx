@@ -12,7 +12,7 @@ export const User = () => {
     business: business,
   };
 
-  const {  } = useUser()
+  console.log(newUser)
 
   return (
     <>
