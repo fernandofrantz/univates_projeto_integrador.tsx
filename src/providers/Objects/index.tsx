@@ -1,33 +1,42 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 
-interface ObjectData {
+interface ToolsData {
   tool: string;
   discription: string;
 }
 
-interface ObjectDataProps {
+interface ToolsDataProps {
   children: ReactNode;
 }
 
-interface ObjectDataProvider {
-  objects: object;
-  setObjects: (tool: ObjectData) => void;
+interface ToolsDataProvider {
+  tools: ToolsData[];
+  registerTools: (tool: ToolsData) => void;
+  maintences: ToolsData[]
+  registerMaintence: (tool: ToolsData) => void;
 }
 
-const ObjectContext = createContext<ObjectDataProvider>(
-  {} as ObjectDataProvider
+const ToolsContext = createContext<ToolsDataProvider>(
+  {} as ToolsDataProvider
 );
 
-export const ObjectProvider = ({ children }: ObjectDataProps) => {
-  const [objects, setObjects] = useState<ObjectData>({} as ObjectData);
+export const ToolsProvider = ({ children }: ToolsDataProps) => {
+  const [tools, setTools] = useState<ToolsData[]>([]);
+  const [maintences, setMaintences] = useState<ToolsData[]>([]);
+  
+
+  const registerTools = (newObject: ToolsData) => {
+    setTools([...tools, newObject])
+  }
+  const registerMaintence = (newObject: ToolsData) => {
+    setMaintences([...maintences, newObject])
+  }
 
   return (
-    <ObjectContext.Provider value={{ objects, setObjects }}>
+    <ToolsContext.Provider value={{ tools, registerTools, maintences, registerMaintence }}>
       {children}
-    </ObjectContext.Provider>
+    </ToolsContext.Provider>
   );
 };
 
-export const useObject = () => {
-  useContext(ObjectContext);
-};
+export const useTools = () => useContext(ToolsContext);

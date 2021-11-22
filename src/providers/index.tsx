@@ -1,8 +1,7 @@
 import { ReactNode } from "react";
 import { UserProvider } from "./User";
-import { ObjectProvider } from "./Objects";
-import { MaintenceProvider } from "./Maintences";
-
+import { ToolsProvider } from "./Objects";
+import { ToolsTypesProvider } from "./Types";
 interface ProvidersProps {
   children: ReactNode;
 }
@@ -10,9 +9,11 @@ interface ProvidersProps {
 export const Providers = ({ children }: ProvidersProps) => {
   return (
     <UserProvider>
-      <ObjectProvider>
-        <MaintenceProvider>{children}</MaintenceProvider>
-      </ObjectProvider>
+      <ToolsTypesProvider>
+        <ToolsProvider>
+          <>{children}</>
+        </ToolsProvider>
+      </ToolsTypesProvider>
     </UserProvider>
   );
 };
